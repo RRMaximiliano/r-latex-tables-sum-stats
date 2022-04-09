@@ -1,0 +1,254 @@
+\documentclass[a4paper]{article}
+%-------------------------------------------------------------------
+% Document specifics
+\usepackage{setspace}												% For spacing, e.g., double line spacing, line spread
+\usepackage{enumitem}												% Controls layout of itemize, enumerate, description
+\usepackage{footnote}												% Improve on LaTeX's footnote handling
+%\usepackage[margin=1in]{geometry}					% Flexible and complete interface to document dimensions
+\usepackage{fullpage}												% Set all page margins to 1.5cm
+\usepackage{changepage}											% Commands to change the page layout in the middle of a document
+\usepackage[table]{xcolor}									% Provides easy driver-independent access to several kinds of color 
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
+\definecolor{olivine}{rgb}{0.6, 0.73, 0.45}
+\usepackage{colortbl}												% Allows rows and columns to be coloured
+\usepackage{nameref}												% Defines a \nameref command, that makes reference to an object
+\usepackage{titling}												% Provides control over the typesetting of the \maketitle command 
+\usepackage[titletoc, title]{appendix}			% For appendices
+%-------------------------------------------------------------------
+% Tables and numbers
+\usepackage[flushleft]{threeparttable}			% Tables with captions and notes with the same width
+\usepackage{threeparttablex}								% Minor improvements over threeparttable
+\usepackage{dcolumn}												% Align on the decimal point of numbers in tabular columns
+\usepackage{multirow}												% Create tabular cells spanning multiple rows
+\usepackage{longtable}											% Tables that continue to the next page
+\usepackage{booktabs}												% Enhance quality of tables
+\usepackage{tabularx}												% Tabulars with adjustable-width columns
+\usepackage{mathrsfs, amsfonts, amssymb, amsmath}					% RSFS fonts in maths, Set of fonts for use in mathematics
+%\usepackage{slashbox}											% Produces tabular cells with diagonal lines
+\usepackage{siunitx}												% Set of tools for authors to typeset quantities in a consistent way
+\usepackage{array}													% Extending the array and tabular environments
+\usepackage[sc]{mathpazo}										% Fonts to typeset mathematics to match Palatino
+%-------------------------------------------------------------------
+% Floats in general
+\usepackage{adjustbox}											% Provides several macros to adjust boxed content
+\usepackage{graphicx}												% Provides a key-value interface for \includegraphics
+\usepackage{float}													% Improves interface for floating objects
+\usepackage[skip = 0pt]{caption}						% Customizes the captions in floating environments
+\captionsetup{justification=centering}			% Captions setup
+\usepackage{subcaption}											% Supports for sub-captions
+\usepackage{rotating}												% Rotation tools, including rotated full-page floats
+\usepackage{pdflscape}											% Makes landscape pages display as landscape
+\usepackage{lscape}													% Place selected parts of a document in landscape
+\usepackage{afterpage}											% Executes command after the next page break
+\usepackage{tikz}													  % For complex graphs in LaTeX
+\usepackage{multicol}
+\usepackage{duckuments}
+\usetikzlibrary{positioning}
+%\tikzset{mynode/.style={draw,text width=1in,align=center}}
+\tikzset{mynode/.style={draw,align=center}}
+%\usepackage[nolists,heads]{endfloat}			  % Moves floats to the end
+%\usepackage[all]{hypcap}										% Adjusts the anchors of captions
+%\usepackage{ctable}												% Flexible typesetting of table and figure floats using key/value directives
+%-------------------------------------------------------------------
+% Languages, encoding 
+\usepackage[english]{babel}									% Multilingual support for Plain TeX or LaTeX
+\usepackage[utf8]{inputenc}									% Accept different input encodings
+\usepackage[autostyle, english = american]{csquotes}				% Provides advanced facilities for inline and display quotations
+\usepackage[T1]{fontenc}										% Standard package for selecting font encodings
+%-------------------------------------------------------------------
+% MISC
+\usepackage{lipsum}													% Easy access to the Lorem Ipsum dummy text.
+\usepackage[plainpages=false,pdfpagelabels]{hyperref}				% Handles cross-referencing commands in LaTeX
+\usepackage{url}													  % Verbatim with URL-sensitive line breaks
+\urlstyle{rm}
+%-------------------------------------------------------------------
+% References
+%\usepackage{apacite}												% APA references thingy
+\usepackage[natbib, style=apa]{biblatex}		% For better citation
+%\addbibresource{.bib} 										  % Replace this with your actual bibfile name
+%-------------------------------------------------------------------
+% Other document setups
+%%% Misplaced noalign
+\makeatletter\let\expandableinput\@@input\makeatother
+%%% Quotes multilingual 
+\MakeOuterQuote{"}
+%%% Matrices
+\setcounter{MaxMatrixCols}{10}
+%%% New theorem environments
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{conclusion}{Conclusion}
+\newtheorem{condition}{Condition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}{Corollary}
+\newtheorem{criterion}{Criterion}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}{Lemma}
+\newtheorem{notation}{Notation}
+\newtheorem{problem}{Problem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{solution}{Solution}
+\newtheorem{assumption}{Assumption}
+%%% New environment for landscape tables    
+\newenvironment{ltable}{\begin{landscape}\begin{table}}{\end{table}\end{landscape}}
+\newenvironment{ltablelong}{\begin{landscape}\begin{longtable}}{\end{longtable}\end{landscape}}
+%%% New environment for column type (hide columns)
+\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+%%% Double perpendicular symbol (for independence)
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+%%% For raw type of inputs (good for esttab command in Stata)
+\makeatletter
+\newcommand\primitiveinput[1]
+{\@@input #1 }
+\makeatother
+%%% Numbering within sections (Tables)
+%\numberwithin{table}{section}
+%%% Define colors
+\definecolor{darkblue}{rgb}{0,0,.4}
+\definecolor{winered}{RGB}{198,13,37}
+\hypersetup{colorlinks=true, 
+			breaklinks=true, 
+			citecolor=winered, 
+			linkcolor=darkblue, 
+			menucolor=darkblue, 
+			urlcolor=darkblue}
+%%% Return to section updates if available
+\newcommand{\returnupdates}{%
+Return to \nameref{sec:updates}.%
+}
+%%% Inserting Stata output (Stars)
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+%-----------------------------------------------------------------
+% BEGIN ----------------------------------------------------------
+%-----------------------------------------------------------------
+%\setlength{\droptitle}{-5em}   										% This is your set screw
+%-----------------------------------------------------------------
+\title{R Tables (Summary Statistics)}
+\author{Rony Rodriguez-Ramirez\\{\normalsize The World Bank, Development Impact Evaluation Unit}}
+%-----------------------------------------------------------------
+\begin{document}
+%-----------------------------------------------------------------
+\maketitle
+\listoftables
+%-----------------------------------------------------------------
+\newpage
+%-----------------------------------------------------------------
+% FIRST TABLE
+%-----------------------------------------------------------------
+\newpage 
+
+\begin{table}[H]
+	\centering
+	\label{tab:tab1_summ_stats}
+	\begin{adjustbox}{max width=\linewidth}
+		\begin{threeparttable}
+			\caption{Basic exported table}
+      \primitiveinput{tables/tab1.tex}
+			\begin{tablenotes}
+				\setlength\labelsep{0pt}
+				\footnotesize
+				\item \textit{Notes}: \lipsum[1].
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+%-----------------------------------------------------------------
+% Second Table
+%-----------------------------------------------------------------
+
+\begin{table}[H]
+	\centering
+	\label{tab:tab2_balance}
+	\begin{adjustbox}{max width=\linewidth}
+		\begin{threeparttable}
+			\caption{Basic exported balance table}
+      \primitiveinput{tables/tab2.tex}
+			\begin{tablenotes}
+				\setlength\labelsep{0pt}
+				\footnotesize
+				\item \textit{Notes}: \lipsum[1].
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+%-----------------------------------------------------------------
+% Third Table
+%-----------------------------------------------------------------
+
+\begin{table}[H]
+	\centering
+	\label{tab:tab3_balance}
+	\begin{adjustbox}{max width=\linewidth}
+		\begin{threeparttable}
+			\caption{Basic exported balance table without overall}
+      \primitiveinput{tables/tab3.tex}
+			\begin{tablenotes}
+				\setlength\labelsep{0pt}
+				\footnotesize
+				\item \textit{Notes}: \lipsum[1].
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+%-----------------------------------------------------------------
+% FIRST TABLE
+%-----------------------------------------------------------------
+\newpage 
+
+\begin{table}[H]
+	\centering
+	\label{tab:tab1_summ_stats_modsum}
+	\begin{adjustbox}{max width=\linewidth}
+		\begin{threeparttable}
+			\caption{Basic exported table using model summary}
+      \begin{tabular}{lcccccc}
+        \toprule
+        \midrule
+        \primitiveinput{tables/tab1_modsum.tex}
+        \bottomrule
+      \end{tabular}
+			  \begin{tablenotes}
+				  \setlength\labelsep{0pt}
+				  \footnotesize
+				  \item \textit{Notes}: \lipsum[1].
+			  \end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\label{tab:tab1_summ_stats_modsum_labels}
+	\begin{adjustbox}{max width=\linewidth}
+		\begin{threeparttable}
+			\caption{Basic exported table using model summary with labels}
+      \begin{tabular}{lcccccc}
+        \toprule
+        \midrule
+        \primitiveinput{tables/tab1_modsum_labels.tex}
+        \bottomrule
+      \end{tabular}
+			  \begin{tablenotes}
+				  \setlength\labelsep{0pt}
+				  \footnotesize
+				  \item \textit{Notes}: \lipsum[1].
+			  \end{tablenotes}
+		\end{threeparttable}
+	\end{adjustbox}
+\end{table}
+
+
+%-----------------------------------------------------------------
+\end{document}
+%-----------------------------------------------------------------
