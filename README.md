@@ -53,7 +53,7 @@ datasummary_skim(census)
 | death     |         50 |           0 |   39474.3 |   41742.3 |   1604.0 |   26176.5 |   186428.0 |
 | marriage  |         50 |           0 |   47701.4 |   45130.4 |   4437.0 |   36279.0 |   210864.0 |
 | divorce   |         50 |           0 |   23679.4 |   25094.0 |   2142.0 |   17112.5 |   133541.0 |
-| rand      |         50 |           0 |       0.5 |       0.3 |      0.0 |       0.5 |        0.9 |
+| rand      |         50 |           0 |       0.5 |       0.3 |      0.0 |       0.5 |        1.0 |
 | treatment |          2 |           0 |       0.5 |       0.5 |      0.0 |       0.0 |        1.0 |
 
 If we want to select only a few variables, we could past a variables
@@ -227,7 +227,7 @@ tab3 %>%
   )
 ```
 
-That gives you the following latex:
+That gives you the following latex code:
 
     \begin{tabular}{lccccc}
     \toprule
