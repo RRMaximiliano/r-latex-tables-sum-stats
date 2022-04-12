@@ -3,19 +3,50 @@
 library(tidyverse)
 library(gtsummary)
 library(modelsummary)
-library(fixest)
 library(gt)
+library(TeachingDemos)
 library(haven)
-library(vtable)
 
 # Load data ---------------------------------------------------------------
+
+char2seed("r training")
 
 census <- read_dta("http://www.stata-press.com/data/r9/census.dta") %>%
   # Create dummy treatment
   mutate(
-    rand = runif(nrow(census)),
+    rand = runif(n()),
     treatment = as.numeric(rand > 0.5)
-  ) 
+  )
+
+# Model Summary -----------------------------------------------------------
+
+build <- pop + death + marriage + divorce ~ N + Mean + SD + Median + Min + Max 
+
+## Without labels
+
+datasummary(
+  build,
+  data = census,
+  output = "latex"
+) %>%
+  gsub("^.*?&","Variables &", .) %>% 
+  gsub("[\\\\][bottomrule][^ ]+$", "", .) %>% 
+  cat(file = here::here("outputs", "tables", "tab1_modsum.tex"))
+
+## With labels
+
+build <- `Population` + `Number of deaths` + `Number of marriages` + `Number of divorces` ~ N + Mean + SD + Median + Min + Max 
+
+datasummary(
+  build,
+  data = census %>% 
+    rename(`Population` = pop, `Number of deaths` = death, `Number of marriages` = marriage, `Number of divorces` = divorce),
+  output = "latex"
+) %>%
+  gsub("^.*?&","Variables &", .) %>% 
+  gsub("[\\\\][bottomrule][^ ]+$", "", .) %>% 
+  cat(file = here::here("outputs", "tables", "tab1_modsum_labels.tex"))
+
 
 # GT Summary --------------------------------------------------------------
 
@@ -85,32 +116,3 @@ tab3 %>%
     linesep = ""
   ) %>% 
   cat(file = here::here("outputs", "tables", "tab3.tex"))
-
-# Model Summary -----------------------------------------------------------
-
-build <- pop + death + marriage + divorce ~ N + Mean + SD + Median + Min + Max 
-
-## Without labels
-
-datasummary(
-  build,
-  data = census,
-  output = "latex"
-) %>%
-  gsub("^.*?&","Variables &", .) %>% 
-  gsub("[\\\\][bottomrule][^ ]+$", "", .) %>% 
-  cat(file = here::here("outputs", "tables", "tab1_modsum.tex"))
-
-## With labels
-
-build <- `Population` + `Number of deaths` + `Number of marriages` + `Number of divorces` ~ N + Mean + SD + Median + Min + Max 
-
-datasummary(
-  build,
-  data = census %>% 
-    rename(`Population` = pop, `Number of deaths` = death, `Number of marriages` = marriage, `Number of divorces` = divorce),
-  output = "latex"
-) %>%
-  gsub("^.*?&","Variables &", .) %>% 
-  gsub("[\\\\][bottomrule][^ ]+$", "", .) %>% 
-  cat(file = here::here("outputs", "tables", "tab1_modsum_labels.tex"))
