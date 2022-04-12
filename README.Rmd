@@ -123,30 +123,45 @@ Check the official official [vignette](https://vincentarelbundock.github.io/mode
 `gtsummary` is another package that can be used for basic and complex summary statistics. Its syntax follows the `gt` family. For a basic summary statistics table, we can use the `tbl_summary()` function as follows:
 
 
-```{r gt1}
+```{r gt1, include = TRUE}
 vars <- c("pop", "death", "marriage", "divorce")
 
-census %>% 
+tab1 <- census %>% 
   select(all_of(vars)) %>% 
   tbl_summary()
 ```
 
-By treatment variable and p-value:
+```{r gt1-save, include = FALSE}
+gt::gtsave(as_gt(tab1), file = file.path(tempdir(), "temp.png"))
+```
 
-```{r gt2}
-census %>% 
-  select(all_of(vars), treatment) %>% 
-  tbl_summary(by = treatment) %>% 
+```{r out.width = "50%", echo = FALSE}
+knitr::include_graphics("README_files/figure-gfm/gt1-save-1.png")
+```
+
+By treatment variable:
+
+```{r gt2, include = TRUE}
+tab2 <- census %>%
+  select(all_of(vars), treatment) %>%
+  tbl_summary(by = treatment) %>%
   add_p()
+```
+
+```{r gt2-save, include = FALSE}
+gt::gtsave(as_gt(tab2), file = file.path(tempdir(), "temp.png"))
+```
+
+```{r out.width = "70%", echo = FALSE}
+knitr::include_graphics("README_files/figure-gfm/gt2-save-1.png")
 ```
 
 Given that we would like to have a more econ-paper type of descriptive statistics, we can pass the columns we would like to have in a vectorized way. 
 
 
-```{r gt3}
+```{r gt3, include = TRUE}
 cols <- c(N = "{N_nonmiss}", Mean = "{mean} ({sd})", Median = "{median}", Min = "{min}", Max = "{max}")
-
-cols %>% 
+tab3 <- cols %>% 
   # we would go through each of these columns
   imap(
     ~ census %>% 
@@ -165,24 +180,18 @@ cols %>%
   modify_footnote(everything() ~ NA) 
 ```
 
+```{r gt3-save, include = FALSE}
+gt::gtsave(as_gt(tab2), file = file.path(tempdir(), "temp.png"))
+```
+
+```{r out.width = "80%", echo = FALSE}
+knitr::include_graphics("README_files/figure-gfm/gt3-save-1.png")
+```
+
 And, finally, we can use the `as_kable_extra` function to export our table to latex. The full example is here below:
 
 ```{r gt4}
-tab1 <- cols %>% 
-  imap(
-    ~ census %>% 
-      select(all_of(vars)) %>% 
-      tbl_summary(
-        statistic = all_continuous() ~ .x
-      ) %>% 
-      modify_header(stat_0 ~ str_glue("{.y}"), label ~ "Variables") 
-  ) %>% 
-  tbl_merge() %>% 
-  # remove spanning headers and footnote
-  modify_spanning_header(everything() ~ NA) %>%
-  modify_footnote(everything() ~ NA) 
-
-tab1 %>%
+tab3 %>%
   as_kable_extra(
     format = "latex", 
     booktabs = TRUE, 
